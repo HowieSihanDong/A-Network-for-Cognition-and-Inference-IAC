@@ -61,3 +61,8 @@ The activation dynamics follow these steps: 1. **Positive Reinforcement**: Units
 ### 4. **Default Assignment**
 
 -   Simulate missing information by removing weights and observe the network's predictions for Ralph's features.
+
+
+## References
+- McClelland, J. L., & Rumelhart, D. E. (1981). *An interactive activation model of context effects in letter perception: I. An account of basic findings*. Psychological Review, 88(5), 375–407. [https://doi.org/10.1037/0033-295X.88.5.375](https://doi.org/10.1037/0033-295X.88.5.375)
+
