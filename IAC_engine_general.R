@@ -40,25 +40,29 @@ changeWeight <- function(network, I, name1, name2, value){
   return(network)
 }
 
-# Generalized weight setup
-setWeightsGeneral <- function(network, I, personInfo, features, groupConnections, featureConnections, negativeConnections, weightValue = 0.1){
-  
+setWeightsGeneral <- function(network, I, personInfo, features, groupConnections, featureConnections, negativeConnections, weightValue = 0.5){
   # Connect each person to their unique features
   for (person in names(personInfo)){
-    network <- changeWeight(network, I, person, personInfo[[person]], weightValue)
+    if (!is.null(personInfo[[person]])) {
+      network <- changeWeight(network, I, person, personInfo[[person]], weightValue)
+    }
   }
   
   # Connect people to groups
   for (group in names(groupConnections)){
     for (person in groupConnections[[group]]){
-      network <- changeWeight(network, I, person, group, weightValue)
+      if (!is.null(I[person]) && !is.null(I[group])) {
+        network <- changeWeight(network, I, person, group, weightValue)
+      }
     }
   }
   
   # Connect people to features
   for (feature in names(featureConnections)){
     for (person in featureConnections[[feature]]){
-      network <- changeWeight(network, I, person, feature, weightValue)
+      if (!is.null(I[person]) && !is.null(I[feature])) {
+        network <- changeWeight(network, I, person, feature, weightValue)
+      }
     }
   }
   
@@ -76,27 +80,28 @@ setWeightsGeneral <- function(network, I, personInfo, features, groupConnections
   return(network)
 }
 
+
 # Run n activation cycles
-cycle <- function(network, I, n = 1, max = 1, min = 0, decay = 0.1, rest = 0){
-  newa <- numeric(length(network$a))
+cycle <- function(network, I, n = 1, max = 1, min = 0, decay = 0.05, rest = 0){
   for (iterations in 1:n){
+    newa <- numeric(length(network$a))
     for (i in 1:length(network$a)){
       net <- 0
       for (j in 1:length(network$a)){
         net <- net + network$w[i, j] * network$a[j]
       }
-      if (net > 0) {
-        newa[i] <- network$a[i] + (max - network$a[i]) * net - decay * (network$a[i] - rest)
-      } else {
-        newa[i] <- network$a[i] + (network$a[i] - min) * net - decay * (network$a[i] - rest)
-      }
+      newa[i] <- network$a[i] + net - decay * (network$a[i] - rest)
+      
+      # Ensure activation remains within [min, max]
+      newa[i] <- max(min(newa[i], max), min)
     }
     network$a <- newa
   }
   return(network)
 }
 
+
 # Show the values of the activations
-show <- function(network, I){
+show <- function(network = network, I = I){
   return(data.frame(Activation = network$a, row.names = names(I)))
 }

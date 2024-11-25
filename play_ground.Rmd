@@ -5,36 +5,76 @@ date: "2024-11-25"
 ---
 ```{r setup, include=TRUE}
 # Initialize it
-source("IAC_Engine.R")
+source("IAC_engine_general.R")
 ```
 
 ```{r setup, include=TRUE}
-show()
+# Example Usage
+
+# Define the person information and features
+personInfo <- c(Art = "ArtName", Rick = "RickName", Sam = "SamName", Ralph = "RalphName", Lance = "LanceName")
+features <- c("Twenties", "Thirties", "Forties", "JuniorHigh", "HighSchool", "College", 
+              "Single", "Married", "Divorced", "Pusher", "Burglar", "Bookie", "Jets", "Sharks")
+
+# Group connections
+groupConnections <- list(
+  Jets = c("Art", "Sam", "Ralph", "Lance"),
+  Sharks = c("Rick")
+)
+
+# Feature connections
+featureConnections <- list(
+  Twenties = c("Sam", "Lance"),
+  Thirties = c("Rick", "Ralph"),
+  Forties = c("Art"),
+  JuniorHigh = c("Art", "Ralph", "Lance"),
+  HighSchool = c("Rick"),
+  College = c("Sam"),
+  Single = c("Art", "Sam", "Ralph"),
+  Married = c("Lance"),
+  Divorced = c("Rick"),
+  Pusher = c("Art", "Ralph"),
+  Burglar = c("Rick", "Lance"),
+  Bookie = c("Sam")
+)
+
+# Negative connections
+negativeConnections <- list(
+  Age = c("Twenties", "Thirties", "Forties"),
+  Education = c("JuniorHigh", "HighSchool", "College"),
+  Marital = c("Single", "Married", "Divorced"),
+  Occupation = c("Pusher", "Burglar", "Bookie"),
+  Gangs = c("Jets", "Sharks")
+)
+
+
+
+
+
 ```
 
 ```{r setup, include=TRUE}
-show()
+# Generate index
+I <- generateIndex(personInfo, features)
+
+# Initialize the network
+network <- initializeNetwork(length(I))
+
+# Set weights
+network <- setWeightsGeneral(network, I, personInfo, features, groupConnections, featureConnections, negativeConnections, weightValue = 0.1)
+
+# Run activation cycles
+network <- cycle(network, I, n = 5)
+
+# Show activations
+print(show(network, I))
+
+
 ```
 
 ```{r setup, include=TRUE}
-show()
+
+network <- changeActivation(network, I, "Art", 0.5)
+network <- cycle(network, I, n = 5)
+show(network,I)
 ```
-## R Markdown
-
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
-
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-```{r cars}
-summary(cars)
-```
-
-## Including Plots
-
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
-```
-
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
