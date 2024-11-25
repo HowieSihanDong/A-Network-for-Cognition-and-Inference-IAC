@@ -3,12 +3,15 @@ title: "IAC_Play_Ground"
 output: html_document
 date: "2024-11-25"
 ---
-```{r setup, echo=TRUE, include=FALSE}
+```{r setup, echo=TRUE}
 # Initialize it
 source("IAC_engine_general.R")
+library(ggplot2)
 ```
 
-```{r setup, include=TRUE}
+```{r setup,  echo=TRUE}
+# Example Usage
+
 # Example Usage
 
 # Define the person information and features
@@ -49,30 +52,93 @@ negativeConnections <- list(
 
 
 
+```
+
+Another Example consisting me and my friends: Interesting!
+```{r setup,  echo=TRUE}
+# Define the person information and features
+personInfo <- c(
+  严珺 = "严珺",
+  思翰 = "思翰",
+  Jov = "Jov",
+  Harry = "Harry",
+  tiantian = "tiantian"
+)
+
+features <- c(
+  "20",
+  "25",
+  "graduate",
+  "nongraduate",
+  "Single",
+  "partnered",
+  "milk tea lover",
+  "thai food lover",
+  "western food lover",
+  "male",
+  "female"
+)
+
+# Group connections
+groupConnections <- list(male = c("严珺", "思翰"),
+                         female = c("Jov", "tiantian"))
+
+# Feature connections
+featureConnections <- list(
+  "20" = c("严珺", "思翰", "tiantian"),
+  "25" = c("Jov"),
+  graduate = c("思翰", "Jov", "tiantian", "Harry"),
+  nongraduate = c("严珺"),
+  Single = c("严珺", "思翰", "Jov", "tiantian"),
+  partnered = c("Harry"),
+  "milk tea lover" = c("严珺", "思翰", "Jov", "tiantian"),
+  "thai food lover" = c("思翰", "Harry"),
+  "western food lover" = c("思翰"),
+  male = c("严珺", "思翰"),
+  female = c("Jov", "tiantian")
+)
+
+# Negative connections
+negativeConnections <- list(
+  Age = c(
+    "20",
+  "25"),
+  Graduate = c("graduate",
+  "nongraduate"),
+  Single = c("Single",
+  "partnered"),
+  food = c( "milk tea lover",
+  "thai food lover",
+  "western food lover"),
+  gender = c(
+  "male",
+  "female")
+)
+
+I <- generateIndex(personInfo, features)
+
 
 ```
 
-```{r setup, include=TRUE}
-# Generate index
-I <- generateIndex(personInfo, features)
+
+Iniitalize this example
+
+```{r setup,  echo=TRUE}
 
 # Initialize the network
 network <- initializeNetwork(length(I))
-
 # Set weights
 network <- setWeightsGeneral(network, I, personInfo, features, groupConnections, featureConnections, negativeConnections, weightValue = 0.1)
 
 ```
 
-
-
-
-
-
-
 ```{r setup, include=TRUE}
-activation_values <- numeric(100)
-for (i in 1:100) {
+cycle_num = 150
+# 假设网络中共有 N 个节点
+N <- length(show(network, I)$Activation)
+activation_values_all <- matrix(0, nrow = cycle_num, ncol = N)
+
+for (i in 1:cycle_num) {
   I <- generateIndex(personInfo, features)
 
   # Initialize the network
@@ -82,7 +148,7 @@ for (i in 1:100) {
   network <- setWeightsGeneral(network, I, personInfo, features, groupConnections, featureConnections, negativeConnections, weightValue = 0.1)
   
   # 更改激活状态
-  network <- changeActivation(network, I, "Rick", 1)
+  network <- changeActivation(network, I, "Harry", 1)
   
   # 运行激活循环
   network <- cycle(network, I, n = i)
@@ -90,12 +156,49 @@ for (i in 1:100) {
   # 显示激活状态
   result <- show(network, I)
   
-  # 打印激活值
-  activation_values[i] <- result$Activation[4]
+  # 记录每个节点的激活值
+  activation_values_all[i, ] <- result$Activation
 }
 
-# 绘制激活值随迭代次数的变化
-plot(1:100, activation_values, type = "o", col = "blue", xlab = "Iteration", ylab = "Activation Value",
-     main = "Activation Value of Node 4 Over Iterations")
+```
+
+```{r setup, include=TRUE}
+# 绘制每个节点的激活值随迭代次数的变化
+# 使用 "bottom" 参数将图例移到图的下方
+matplot(1:cycle_num, activation_values_all, type = "o", pch = 1, col = 1:N,
+        xlab = "Iteration", ylab = "Activation Value",
+        main = "Activation Values of All Nodes Over Iterations")
+# legend("bottom", legend = paste("Node", 1:N), col = 1:N, pch = 1, horiz = TRUE)
+```
+
+
+sjs
+
+``````{r plot_example, echo=FALSE, message=TRUE, warning=TRUE}
+# 创建数据框
+df <- data.frame(
+  Sample = 1:20,                        # 样本编号 1 到 40
+  ActivationValue = activation_values_all[1:20, 13]  # 第 1 到第 40 行的第 12 列激活值
+)
+
+# 使用 ggplot2 绘制图表
+ggplot(df, aes(x = Sample, y = ActivationValue)) +
+  geom_point(color = "blue", size = 3) +          # 绘制点，颜色为蓝色，点的大小为 3
+  geom_line(color = "blue", size = 1) +           # 绘制线，颜色为蓝色，线的粗细为 1
+  ggtitle("Does Harry Like Thai Food?") +                    # 设置图表标题
+  xlab("Cycle") +                              # 设置 x 轴标签
+  ylab("How MUCH BRO?") +                                # 设置 y 轴标签
+  theme_minimal() +                               # 使用简洁的主题
+  theme(
+    plot.title = element_text(hjust = 0.5, size = 16, face = "bold"),  # 设置标题样式
+    axis.title = element_text(size = 14),                              # 设置轴标签大小
+    axis.text = element_text(size = 12)                                # 设置轴刻度标签大小
+  ) +
+  geom_vline(xintercept = 20, linetype = "dashed", color = "red")      # 增加一条虚线标记在 x = 20
+
+       
 
 ```
+
+
+结束是
