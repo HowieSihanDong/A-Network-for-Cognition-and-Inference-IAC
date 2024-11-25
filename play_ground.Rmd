@@ -3,7 +3,7 @@ title: "IAC_Play_Ground"
 output: html_document
 date: "2024-11-25"
 ---
-```{r setup, include=TRUE}
+```{r setup, echo=TRUE, include=FALSE}
 # Initialize it
 source("IAC_engine_general.R")
 ```
@@ -12,9 +12,8 @@ source("IAC_engine_general.R")
 # Example Usage
 
 # Define the person information and features
-personInfo <- c(Art = "ArtName", Rick = "RickName", Sam = "SamName", Ralph = "RalphName", Lance = "LanceName")
-features <- c("Twenties", "Thirties", "Forties", "JuniorHigh", "HighSchool", "College", 
-              "Single", "Married", "Divorced", "Pusher", "Burglar", "Bookie", "Jets", "Sharks")
+personInfo <- c(Art = "Art", Rick = "Rick", Sam = "Sam", Ralph = "Ralph", Lance = "Lance")
+features <- c("Twenties", "Thirties", "Forties", "JuniorHigh", "HighSchool", "College", "Single", "Married", "Divorced", "Pusher", "Burglar", "Bookie", "Jets", "Sharks")
 
 # Group connections
 groupConnections <- list(
@@ -63,18 +62,40 @@ network <- initializeNetwork(length(I))
 # Set weights
 network <- setWeightsGeneral(network, I, personInfo, features, groupConnections, featureConnections, negativeConnections, weightValue = 0.1)
 
-# Run activation cycles
-network <- cycle(network, I, n = 5)
-
-# Show activations
-print(show(network, I))
-
-
 ```
 
-```{r setup, include=TRUE}
 
-network <- changeActivation(network, I, "Art", 0.5)
-network <- cycle(network, I, n = 5)
-show(network,I)
+
+
+
+
+
+```{r setup, include=TRUE}
+activation_values <- numeric(100)
+for (i in 1:100) {
+  I <- generateIndex(personInfo, features)
+
+  # Initialize the network
+  network <- initializeNetwork(length(I))
+
+  # Set weights
+  network <- setWeightsGeneral(network, I, personInfo, features, groupConnections, featureConnections, negativeConnections, weightValue = 0.1)
+  
+  # 更改激活状态
+  network <- changeActivation(network, I, "Rick", 1)
+  
+  # 运行激活循环
+  network <- cycle(network, I, n = i)
+  
+  # 显示激活状态
+  result <- show(network, I)
+  
+  # 打印激活值
+  activation_values[i] <- result$Activation[4]
+}
+
+# 绘制激活值随迭代次数的变化
+plot(1:100, activation_values, type = "o", col = "blue", xlab = "Iteration", ylab = "Activation Value",
+     main = "Activation Value of Node 4 Over Iterations")
+
 ```
