@@ -9,6 +9,8 @@ source("IAC_engine_general.R")
 library(ggplot2)
 ```
 
+----
+
 ```{r setup,  echo=TRUE}
 # Example Usage
 
@@ -62,58 +64,125 @@ personInfo <- c(
   思翰 = "思翰",
   Jov = "Jov",
   Harry = "Harry",
-  tiantian = "tiantian"
+  tiantian = "tiantian",
+  Leo = "Leo",
+  Alex = "Alex",
+  Cindy = "Cindy",
+  Alan = "Alan",
+  Mona = "Mona",
+  Vivian = "Vivian",
+  Kevin = "Kevin",
+  Sophia = "Sophia",
+  Daniel = "Daniel",
+  Emma = "Emma",
+  Ryan = "Ryan",
+  Grace = "Grace",
+  Oliver = "Oliver",
+  Chloe = "Chloe",
+  Ethan = "Ethan"
 )
 
 features <- c(
   "20",
   "25",
+  "30",
+  "35",
+  "40",
   "graduate",
   "nongraduate",
   "Single",
   "partnered",
+  "married",
+  "divorced",
   "milk tea lover",
   "thai food lover",
   "western food lover",
+  "japanese food lover",
+  "spicy food lover",
+  "vegan",
+  "coffee lover",
   "male",
-  "female"
+  "female",
+  "athlete",
+  "bookworm",
+  "traveler",
+  "gamer",
+  "artist",
+  "musician",
+  "chef",
+  "fitness enthusiast",
+  "yoga practitioner",
+  "hiker",
+  "photographer",
+  "dancer",
+  "entrepreneur"
 )
 
 # Group connections
-groupConnections <- list(male = c("严珺", "思翰"),
-                         female = c("Jov", "tiantian"))
+groupConnections <- list(
+  male = c("严珺", "思翰", "Leo", "Harry", "Alan", "Kevin", "Daniel", "Ryan", "Oliver", "Ethan"),
+  female = c("Jov", "tiantian", "Cindy", "Mona", "Alex", "Vivian", "Sophia", "Emma", "Grace", "Chloe")
+)
 
 # Feature connections
 featureConnections <- list(
-  "20" = c("严珺", "思翰", "tiantian"),
-  "25" = c("Jov"),
-  graduate = c("思翰", "Jov", "tiantian", "Harry"),
-  nongraduate = c("严珺"),
-  Single = c("严珺", "思翰", "Jov", "tiantian"),
-  partnered = c("Harry"),
-  "milk tea lover" = c("严珺", "思翰", "Jov", "tiantian"),
-  "thai food lover" = c("思翰", "Harry"),
-  "western food lover" = c("思翰"),
-  male = c("严珺", "思翰"),
-  female = c("Jov", "tiantian")
+  "20" = c("严珺", "思翰"),
+  "25" = c("Jov", "Alan", "Ryan"),
+  "30" = c("Harry", "Mona", "Grace"),
+  "35" = c("Daniel", "Chloe"),
+  "40" = c("Ethan"),
+  graduate = c("思翰", "Jov", "Harry", "Mona", "Ryan", "Grace", "Oliver"),
+  nongraduate = c("严珺", "Cindy", "Alan", "Chloe", "Ethan"),
+  Single = c("严珺", "思翰", "Jov", "Cindy", "Ryan", "Grace"),
+  partnered = c("Harry", "Alex", "Oliver"),
+  married = c("Mona", "Daniel", "Chloe"),
+  divorced = c("Emma", "Ethan"),
+  "milk tea lover" = c("思翰", "Jov", "Vivian", "Ryan"),
+  "thai food lover" = c("Harry", "Alex", "Grace", "Ethan"),
+  "western food lover" = c("Alan", "Mona", "Oliver"),
+  "japanese food lover" = c("Jov", "tiantian", "Chloe"),
+  "spicy food lover" = c("Harry", "Emma", "Ethan"),
+  vegan = c("Vivian", "Sophia", "Daniel"),
+  "coffee lover" = c("Kevin", "Alex", "Grace"),
+  male = c("严珺", "思翰", "Leo", "Harry", "Alan", "Kevin", "Daniel", "Ryan", "Oliver", "Ethan"),
+  female = c("Jov", "tiantian", "Cindy", "Mona", "Alex", "Vivian", "Sophia", "Emma", "Grace", "Chloe"),
+  athlete = c("Leo", "Harry", "Ryan"),
+  bookworm = c("Jov", "Cindy", "Emma", "Oliver"),
+  traveler = c("思翰", "Mona", "Grace"),
+  gamer = c("严珺", "Leo", "Ethan"),
+  artist = c("Vivian", "Emma", "Chloe"),
+  musician = c("Daniel", "Jov", "Ryan"),
+  chef = c("Harry", "Mona", "Alan"),
+  "fitness enthusiast" = c("Leo", "Sophia", "Ethan"),
+  "yoga practitioner" = c("Alex", "Grace", "Chloe"),
+  hiker = c("Ryan", "Oliver", "Emma"),
+  photographer = c("Cindy", "Vivian", "Ethan"),
+  dancer = c("Sophia", "Chloe", "Alan"),
+  entrepreneur = c("Daniel", "Harry", "Grace")
 )
 
 # Negative connections
 negativeConnections <- list(
   Age = c(
     "20",
-  "25"),
-  Graduate = c("graduate",
-  "nongraduate"),
-  Single = c("Single",
-  "partnered"),
-  food = c( "milk tea lover",
-  "thai food lover",
-  "western food lover"),
-  gender = c(
-  "male",
-  "female")
+    "25",
+    "30",
+    "35",
+    "40"
+  ),
+  Graduate = c("graduate", "nongraduate"),
+  Single = c("Single", "partnered", "married", "divorced"),
+  food = c("milk tea lover", "thai food lover", "western food lover", "japanese food lover", "spicy food lover", "vegan", "coffee lover"),
+  gender = c("male", "female"),
+  hobbies = c("athlete", "bookworm", "traveler", "gamer", "artist", "musician", "chef", "fitness enthusiast", "yoga practitioner", "hiker", "photographer", "dancer", "entrepreneur")
 )
+
+# Print the updated lists
+groupConnections
+featureConnections
+negativeConnections
+
+
 
 I <- generateIndex(personInfo, features)
 
@@ -131,6 +200,7 @@ network <- initializeNetwork(length(I))
 network <- setWeightsGeneral(network, I, personInfo, features, groupConnections, featureConnections, negativeConnections, weightValue = 0.1)
 
 ```
+----
 
 ```{r setup, include=TRUE}
 cycle_num = 150
@@ -148,7 +218,7 @@ for (i in 1:cycle_num) {
   network <- setWeightsGeneral(network, I, personInfo, features, groupConnections, featureConnections, negativeConnections, weightValue = 0.1)
   
   # 更改激活状态
-  network <- changeActivation(network, I, "Harry", 1)
+  network <- changeActivation(network, I, "milk tea lover", 1)
   
   # 运行激活循环
   network <- cycle(network, I, n = i)
@@ -160,6 +230,7 @@ for (i in 1:cycle_num) {
   activation_values_all[i, ] <- result$Activation
 }
 
+result
 ```
 
 ```{r setup, include=TRUE}
