@@ -9,53 +9,7 @@ source("IAC_engine_general.R")
 library(ggplot2)
 ```
 
-----
-
-```{r setup,  echo=TRUE}
-# Example Usage
-
-# Example Usage
-
-# Define the person information and features
-personInfo <- c(Art = "Art", Rick = "Rick", Sam = "Sam", Ralph = "Ralph", Lance = "Lance")
-features <- c("Twenties", "Thirties", "Forties", "JuniorHigh", "HighSchool", "College", "Single", "Married", "Divorced", "Pusher", "Burglar", "Bookie", "Jets", "Sharks")
-
-# Group connections
-groupConnections <- list(
-  Jets = c("Art", "Sam", "Ralph", "Lance"),
-  Sharks = c("Rick")
-)
-
-# Feature connections
-featureConnections <- list(
-  Twenties = c("Sam", "Lance"),
-  Thirties = c("Rick", "Ralph"),
-  Forties = c("Art"),
-  JuniorHigh = c("Art", "Ralph", "Lance"),
-  HighSchool = c("Rick"),
-  College = c("Sam"),
-  Single = c("Art", "Sam", "Ralph"),
-  Married = c("Lance"),
-  Divorced = c("Rick"),
-  Pusher = c("Art", "Ralph"),
-  Burglar = c("Rick", "Lance"),
-  Bookie = c("Sam")
-)
-
-# Negative connections
-negativeConnections <- list(
-  Age = c("Twenties", "Thirties", "Forties"),
-  Education = c("JuniorHigh", "HighSchool", "College"),
-  Marital = c("Single", "Married", "Divorced"),
-  Occupation = c("Pusher", "Burglar", "Bookie"),
-  Gangs = c("Jets", "Sharks")
-)
-
-
-
-
-```
-
+--
 Another Example consisting me and my friends: Interesting!
 ```{r setup,  echo=TRUE}
 # Define the person information and features
@@ -200,7 +154,7 @@ network <- initializeNetwork(length(I))
 network <- setWeightsGeneral(network, I, personInfo, features, groupConnections, featureConnections, negativeConnections, weightValue = 0.1)
 
 ```
-----
+结束
 
 ```{r setup, include=TRUE}
 cycle_num = 150
@@ -218,7 +172,7 @@ for (i in 1:cycle_num) {
   network <- setWeightsGeneral(network, I, personInfo, features, groupConnections, featureConnections, negativeConnections, weightValue = 0.1)
   
   # 更改激活状态
-  network <- changeActivation(network, I, "milk tea lover", 1)
+  network <- changeActivation(network, I, "coffee lover", 1)
   
   # 运行激活循环
   network <- cycle(network, I, n = i)
@@ -232,6 +186,9 @@ for (i in 1:cycle_num) {
 
 result
 ```
+
+
+----
 
 ```{r setup, include=TRUE}
 # 绘制每个节点的激活值随迭代次数的变化
