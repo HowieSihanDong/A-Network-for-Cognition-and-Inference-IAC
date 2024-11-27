@@ -197,6 +197,25 @@ matplot(1:cycle_num, activation_values_all, type = "o", pch = 1, col = 1:N,
         xlab = "Iteration", ylab = "Activation Value",
         main = "Activation Values of All Nodes Over Iterations")
 # legend("bottom", legend = paste("Node", 1:N), col = 1:N, pch = 1, horiz = TRUE)
+
+
+
+# Plot activation values using ggplot2
+library(ggplot2)
+activation_data <- data.frame(
+  Iteration = rep(1:cycle_num, times = N),
+  ActivationValue = as.vector(activation_values_all),
+  Node = rep(1:N, each = cycle_num)
+)
+
+ggplot(activation_data, aes(x = Iteration, y = ActivationValue, color = as.factor(Node))) +
+  geom_line() +
+  geom_point() +
+  labs(title = "Activation Values of All Nodes Over Iterations",
+       x = "Iteration",
+       y = "Activation Value",
+       color = "Node") +
+  theme_minimal()
 ```
 
 
