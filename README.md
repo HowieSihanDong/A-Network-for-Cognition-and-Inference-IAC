@@ -1,11 +1,11 @@
 <img width="1555" alt="cover" src="https://github.com/user-attachments/assets/6396a00d-605d-4cad-bd0a-03a5d33036d6">
 
-# Interactive Activation and Competition (IAC) Network
+# 🐥 Interactive Activation and Competition (IAC) Network
 This project implements the **Interactive Activation and Competition (IAC)** network, as described by McClelland and Rumelhart. The IAC model demonstrates several key properties of neural networks, including content addressability, robustness to noise, generalization, and plausible default assignments. In this project, you can put any possible dataset to construct an IAC network that is potentially serving different purposes (E.g., personality prediction...). I only give one example using people around me with GPT-generated datasets...
 
 ------------------------------------------------------------------------
 
-## Overview
+## 📂 Overview
 
 
 <div align="center">
@@ -25,7 +25,7 @@ The **IAC network** uses competitive pools of interconnected units to model info
 
 ![](/pic/IAC_net_JS.png)
 
-### Key Features:
+### 📣 Key Features:
 
 1.  **Content Addressability**: Retrieve instances or features using partial information.
 2.  **Robustness to Noise**: Handle incomplete or incorrect inputs gracefully.
@@ -34,7 +34,7 @@ The **IAC network** uses competitive pools of interconnected units to model info
 
 ------------------------------------------------------------------------
 
-## How It Works
+## 🔭 How It Works
 
 The network consists of: - **Instance Units**: Representing specific gang members (e.g., Art, Rick, Sam). - **Feature Units**: Representing characteristics (e.g., age, marital status, occupation). - **Positive Connections**: Link between instance units and their features. - **Negative Connections**: Mutual inhibition within competitive pools (e.g., age groups or occupations).
 
@@ -42,9 +42,9 @@ The activation dynamics follow these steps: 1. **Positive Reinforcement**: Units
 
 ------------------------------------------------------------------------
 
-## Code Structure
+##  📐 Code Structure
 
-### Main Components:
+### 🌷 Main Components:
 
 1.  **Activation and Weight Management**:
     -   `reset()`: Resets all activations to 0.
@@ -58,7 +58,7 @@ The activation dynamics follow these steps: 1. **Positive Reinforcement**: Units
 
 ------------------------------------------------------------------------
 
-## TRY BY YOURSELF! WHY NOT?
+## 🍎 TRY BY YOURSELF! WHY NOT?
 
 ### 1. **Content Addressability**
 
