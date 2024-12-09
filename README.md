@@ -7,6 +7,10 @@ This project implements the **Interactive Activation and Competition (IAC)** net
 
 ## Overview
 
+
+https://github.com/user-attachments/assets/98e64065-0026-4774-b933-03205fe2ff6a
+*This is derived from SimBrain*
+
 The **IAC network** uses competitive pools of interconnected units to model information processing. Each unit represents a feature or hypothesis, and the network processes inputs interactively through positive and negative weight connections. The provided implementation replicates the **Jets and Sharks** example from McClelland's seminal works.
 
 ![](/pic/IAC_net_JS.png)
