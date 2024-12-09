@@ -1,4 +1,5 @@
 <img width="1555" alt="cover" src="https://github.com/user-attachments/assets/6396a00d-605d-4cad-bd0a-03a5d33036d6">
+
 # Interactive Activation and Competition (IAC) Network
 This project implements the **Interactive Activation and Competition (IAC)** network, as described by McClelland and Rumelhart. The IAC model demonstrates several key properties of neural networks, including content addressability, robustness to noise, generalization, and plausible default assignments.
 
