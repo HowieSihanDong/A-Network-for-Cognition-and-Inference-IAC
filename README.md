@@ -9,8 +9,15 @@ This project implements the **Interactive Activation and Competition (IAC)** net
 
 
 <div align="center">
-  <img src="https://github.com/user-attachments/assets/98e64065-0026-4774-b933-03205fe2ff6a" alt="SimBrain Image" width="600">
-  <p><em>This is derived from SimBrain</em></p>
+
+<video src="https://github.com/user-attachments/assets/98e64065-0026-4774-b933-03205fe2ff6a" controls width="560" height="315">
+Your browser does not support the video tag.
+</video>
+
+<br>
+
+*This is derived from SimBrain*
+
 </div>
 
 
